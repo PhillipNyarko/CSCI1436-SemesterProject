@@ -1,7 +1,7 @@
 import java.awt.event.*;
 import javax.swing.*;
 
-public class MyFrame extends JFrame implements KeyListener{
+public class MyFrame extends JFrame implements KeyListener{ // subclass that inherits from jframe
 
 	public static int gridRows = 6;
   public static int gridCols = 7;
@@ -11,7 +11,9 @@ public class MyFrame extends JFrame implements KeyListener{
 	public static final String YELLOW = "\033[38;5;220m";
 	public static final String LIME_GREEN = "\033[38;5;40m";
   public static final String ANSI_RESET = "\u001B[0m";
-  public static final String BLINKON = "\033[5m"; // color forhighlighting of the column w/ slow blink (currently white)
+  public static final String COLUMN_HIGHLIGHT = ""; // color forhighlighting of the column w/ slow blink (currently white)
+	public static int redScore = 0;
+  public static int blueScore = 0;
 		
   public static String redChip =  RED + "o" + ANSI_RESET; // red chip 
   public static String blueChip = BLUE + "o" + ANSI_RESET;
@@ -28,7 +30,6 @@ public class MyFrame extends JFrame implements KeyListener{
 		this.setLayout(null);
 		this.addKeyListener(this);
 		this.setVisible(true);
-		// add an image that will display a welcom to connect four, click the window and then play in the terminal/ console message
 	}
 
 	@Override
@@ -42,6 +43,14 @@ public class MyFrame extends JFrame implements KeyListener{
 			case 'd': 
 				moveRight();
 				update();
+				break;
+			case 'p': 
+				initGrid();
+				break;
+			case 'q': 
+				clearScreen();
+				System.out.println("Thanks for playing!");
+				System.exit(0);
 				break;
 			case ' ': 
 				dropPiece();
@@ -113,7 +122,7 @@ public class MyFrame extends JFrame implements KeyListener{
 				System.out.print("                    "); // print spacing before each row
 				for(int j = 0; j < gameBoard[0].length; j++){
 					if(j == playerPosition){
-						System.out.print(BLINKON + gameBoard[i][j] + ANSI_RESET + " "); 
+						System.out.print(COLUMN_HIGHLIGHT + gameBoard[i][j] + ANSI_RESET + " "); 
 					}else{
 						System.out.print(gameBoard[i][j] + " "); // print value of each index in corresponding row of grid
 					}
@@ -176,7 +185,7 @@ public class MyFrame extends JFrame implements KeyListener{
 						}
 					}
 					update();
-					sleep(1);
+					sleep(10); // 1
 				}
 			}
 		}
@@ -198,11 +207,14 @@ public class MyFrame extends JFrame implements KeyListener{
 							}
 						}
 						if(consecutivePieces == 4){
+              
 							for(int k = 0; k < 4; k++){
 									gameBoard[i][(j-3) + k] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -216,11 +228,14 @@ public class MyFrame extends JFrame implements KeyListener{
 							}
 						}
 						if(consecutivePieces == 4){
+              
 							for(int k = 0; k < 4; k++){
 									gameBoard[(i-3) + k][(j-3) + k] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -233,11 +248,14 @@ public class MyFrame extends JFrame implements KeyListener{
 							}
 						}
 						if(consecutivePieces == 4){
+                            
 							for(int k = 0; k < 4; k++){
 									gameBoard[(i-3) + k][j] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -250,11 +268,14 @@ public class MyFrame extends JFrame implements KeyListener{
 							}
 						}
 						if(consecutivePieces == 4){
+              
 							for(int k = 0; k < 4; k++){
 									gameBoard[i-k][j+k] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -267,11 +288,14 @@ public class MyFrame extends JFrame implements KeyListener{
 							}
 						}
 						if(consecutivePieces == 4){
+              
 							for(int k = 0; k < 4; k++){
 									gameBoard[i][j+k] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -284,11 +308,14 @@ public class MyFrame extends JFrame implements KeyListener{
 							}
 						}
 						if(consecutivePieces == 4){
+              
 							for(int k = 0; k < 4; k++){
 									gameBoard[i+k][j+k] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -301,11 +328,14 @@ public class MyFrame extends JFrame implements KeyListener{
 							}
 						}
 						if(consecutivePieces == 4){
+              
 							for(int k = 0; k < 4; k++){
 									gameBoard[i+k][j] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -319,10 +349,12 @@ public class MyFrame extends JFrame implements KeyListener{
 						}
 						if(consecutivePieces == 4){
 							for(int k = 0; k < 4; k++){
-									gameBoard[i][j] = LIME_GREEN + "o" + ANSI_RESET;
+									gameBoard[i+k][j-k] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
 									sleep(10);
 							}
+							clearBoard();
+							displayWinner();
 					  }else{
 							consecutivePieces = 0;
 						}
@@ -330,6 +362,7 @@ public class MyFrame extends JFrame implements KeyListener{
 				}
 			}
 		}
+    update();
 	}
 
 	public static void switchPlayer(){
@@ -358,13 +391,22 @@ public class MyFrame extends JFrame implements KeyListener{
 			selectionGrid[i] = " ";
 		}
 	}
+	
+	public static void clearBoard(){
+		for(int i = 0; i < gameBoard.length; i++){
+			for(int j = 0; j < gameBoard[0].length; j++){
+				gameBoard[i][j] = "o";
+			}
+		}
+	}
+
 
 	public static void displayCurrentPlayer(){
 		// Displaying the current player name/color
 		System.out.println();
 		if(currentPlayer == redChip){
 			System.out.println("");
-			System.out.println("            " + RED + "Red" + ANSI_RESET + " Player: Select your spot ");
+			System.out.println("             " + RED + "Red" + ANSI_RESET + " Player: Select your spot ");
 			}else{
 			currentPlayer = blueChip;
 				System.out.println("");
@@ -372,9 +414,23 @@ public class MyFrame extends JFrame implements KeyListener{
 			}
 	}
 	
-	public static void addToScore(){
-		// Display the current scores of the players
-    
+	public static void displayWinner(){
+    System.out.println();
+		if(currentPlayer == redChip){
+			System.out.println("");
+      System.out.print(" And the winner is");
+      for(int i = 0; i < 3; i++){
+        System.out.print(".");
+      }
+			System.out.print(" " + RED + "Red" + ANSI_RESET);
+			}else{
+        System.out.println("");
+        System.out.print(" And the winner is");
+        for(int i = 0; i < 3; i++){
+          System.out.print(".");
+        }
+			  System.out.print(" " + BLUE + "Blue" + ANSI_RESET);
+			}
 	}
 	
 }
