@@ -189,58 +189,143 @@ public class MyFrame extends JFrame implements KeyListener{
 				
 				int consecutivePieces = 0;
 				if(gameBoard[i][j] == currentPlayer){
-					gameBoard[i][j] = YELLOW + "o"+ ANSI_RESET;
-					update();
-					sleep(5);
 
 					if(j-1 >= 0 && gameBoard[i][j-1] == currentPlayer){ // check if left is in bounds and equal to player
-						gameBoard[i][j-1] = YELLOW + "o"+ ANSI_RESET;
-						update();
-						sleep(5);
-						gameBoard[i][j-1] = currentPlayer;
-						update();
-						sleep(5);
 						consecutivePieces += 2; // add one to the 4 pieces needed to win 
 						for(int k = 2; k < 4; k++){
 							if(j-k >= 0 && gameBoard[i][j-k] == currentPlayer){
-								gameBoard[i][j-k] = YELLOW + "o"+ ANSI_RESET;
-								update();
-								sleep(5);
-								gameBoard[i][j-k] = currentPlayer;
-								update();
-								sleep(5);
 								consecutivePieces += 1; 
 							}
 						}
-						if(consecutivePieces != 4){
-							consecutivePieces = 0;
-							for(int k = 1; k < 4; k++){
-								if(j-k >= 0 && gameBoard[i][j-k] == YELLOW){
-									gameBoard[i][j-k] = RED;
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[i][(j-3) + k] = LIME_GREEN + "o" + ANSI_RESET;
 									update();
-									sleep(5);
-								}
+									sleep(10);
 							}
-					  }
-					}else{
-						gameBoard[i][j] = currentPlayer;
-						update();
-						sleep(5);
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
 					
-					if(j-1 >= 0 && i-1 >= 0){ // check if left up is in bounds
+					if(j-1 >= 0 && i-1 >= 0 && gameBoard[i-1][j-1] == currentPlayer){ // check if left up is in bounds
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(j-k >= 0 && i-k >= 0 && gameBoard[i-k][j-k] == currentPlayer){
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[(i-3) + k][(j-3) + k] = LIME_GREEN + "o" + ANSI_RESET;
+									update();
+									sleep(10);
+							}
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
-					if(i-1 >= 0){ // check if up is in bounds
+					if(i-1 >= 0 && gameBoard[i-1][j] == currentPlayer){ // check if up is in bounds
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(i-k >= 0 && gameBoard[i-k][j] == currentPlayer){
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[(i-3) + k][j] = LIME_GREEN + "o" + ANSI_RESET;
+									update();
+									sleep(10);
+							}
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
-					if(j+1 < gameBoard[0].length && i-1 >= 0){ // check if right up is in bounds
+					if(j+1 < gameBoard[0].length && i-1 >= 0 && gameBoard[i-1][j+1] == currentPlayer){ // check if right up is in bounds
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(i-k >= 0 && j+k < gameBoard[0].length && gameBoard[i-k][j+k] == currentPlayer){
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[i-k][j+k] = LIME_GREEN + "o" + ANSI_RESET;
+									update();
+									sleep(10);
+							}
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
 					if(j+1 < gameBoard[0].length){ // check if right is in bounds
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(j+k < gameBoard[0].length && gameBoard[i][j+k] == currentPlayer){
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[i][j+k] = LIME_GREEN + "o" + ANSI_RESET;
+									update();
+									sleep(10);
+							}
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
 					if(j+1 < gameBoard[0].length && i+1 < gameBoard.length){ // check if right down is in bounds
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(j+k < gameBoard[0].length && i+k < gameBoard.length && gameBoard[i+k][j+k] == currentPlayer){
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[i+k][j+k] = LIME_GREEN + "o" + ANSI_RESET;
+									update();
+									sleep(10);
+							}
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
 					if(i+1 < gameBoard.length){ // check if down is in bounds 
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(i+k < gameBoard.length && gameBoard[i+k][j] == currentPlayer){
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[i+k][j] = LIME_GREEN + "o" + ANSI_RESET;
+									update();
+									sleep(10);
+							}
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
-					if(i+1 < gameBoard.length && j-1 >= 0){ // check if down left is in bounds
+					if(i+1 < gameBoard.length && j-1 >= 0){ // check if left down is in bounds
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(j-k >= 0 && i+k < gameBoard.length && gameBoard[i+k][j-k] == currentPlayer){
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces == 4){
+							for(int k = 0; k < 4; k++){
+									gameBoard[i][j] = LIME_GREEN + "o" + ANSI_RESET;
+									update();
+									sleep(10);
+							}
+					  }else{
+							consecutivePieces = 0;
+						}
 					}
 				}
 			}
