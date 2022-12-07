@@ -26,6 +26,7 @@ public class MyFrame extends JFrame implements KeyListener{
 		this.setLayout(null);
 		this.addKeyListener(this);
 		this.setVisible(true);
+		// add an image that will display a welcom to connect four, click the window and then play in the terminal/ console message
 	}
 
 	@Override
@@ -42,9 +43,14 @@ public class MyFrame extends JFrame implements KeyListener{
 				break;
 			case ' ': 
 				dropPiece();
+				checkRows();
+				sleep(200);
 				switchPlayer();
-				update();
+				selectionGrid[playerPosition] = currentPlayer;
+				update(); 
 				break;
+			// add a case that terminates the program if the user presses q
+			// tell the user thanks for playing first
 		}
 	}
 
@@ -123,6 +129,8 @@ public class MyFrame extends JFrame implements KeyListener{
 		for(int i = 0; i < 3; i++){
 			System.out.print("≫");
 		}
+
+		displayCurrentPlayer();
 	}
 	
 	public static void moveRight(){
@@ -150,6 +158,7 @@ public class MyFrame extends JFrame implements KeyListener{
 	}
 	
 	public static void dropPiece(){
+		// if you try to place a piece in a column thata is filled already it doesnt give you a second chance it just switches the use 
 		clearSelectionGrid();
 		update();
 		for(int i = 0; i < gameBoard.length; i++){
@@ -172,7 +181,40 @@ public class MyFrame extends JFrame implements KeyListener{
 		}
 	}
 	
-	public static void checksRows(){
+	public static void checkRows(){
+		// check for winner and add to player score
+		for(int i = 0; i < gameBoard.length; i++){
+			for(int j = 0; j < gameBoard[0].length; j++){
+				if(gameBoard[i][j] == currentPlayer){
+					if(j-1 >= 0){ // check if left out of bound
+						System.out.println("left in bounds");
+					}
+					if(j-1 >= 0 && i-1 >= 0){ // check if left up is out of bounds
+						System.out.println("left-up in bounds");
+					}
+					if(i-1 >= 0){ // check if up is out of bounds
+						System.out.println("up in bounds");					
+					}
+					if(j+1 < gameBoard[0].length && i-1 >= 0){ // check if right up is out of bounds
+						System.out.println("right-up in bounds");					
+					}
+					if(j+1 < gameBoard[0].length){ // check if right is out of bounds
+						System.out.println("right in bounds");					
+					}
+					if(j+1 < gameBoard[0].length && i+1 < gameBoard.length){ // check if right down is out of bounds
+						System.out.println("right-down in bounds");					
+					}
+					if(i+1 < gameBoard.length){ // check if down is out of bounds 
+						System.out.println("down in bounds");					
+					}
+					if(i+1 < gameBoard.length && j-1 >= 0){ // check if down left is out of bounds
+						System.out.println("down-left in bounds");										
+					}
+					System.out.println("___________");
+				}
+			}
+			System.out.println("___________");
+		}
 	}
 
 	public static void switchPlayer(){
@@ -190,7 +232,7 @@ public class MyFrame extends JFrame implements KeyListener{
 
 	public static void sleep(int seconds){
     try {
-      Thread.sleep(seconds * 100);
+      Thread.sleep(seconds * 50);
     } catch(InterruptedException e) {
       e.printStackTrace();
     }
@@ -201,4 +243,22 @@ public class MyFrame extends JFrame implements KeyListener{
 			selectionGrid[i] = " ";
 		}
 	}
+
+	public static void displayCurrentPlayer(){
+		// Displaying the current player name/color
+		if(currentPlayer == redChip){
+			System.out.println("");
+			System.out.println(RED + "Red" + ANSI_RESET + " Player: Select your spot: ");
+			}else{
+			currentPlayer = blueChip;
+				System.out.println("");
+				System.out.println(BLUE + "Blue" + ANSI_RESET + " Player: Select your spot: ");
+			}
+	}
+	
+	public static void addToScore(){
+		// Display the current scores of the players
+    
+	}
+	
 }
