@@ -8,6 +8,8 @@ public class MyFrame extends JFrame implements KeyListener{
 
   public static final String RED  = "\u001B[31m";
   public static final String BLUE = "\u001B[34m";
+	public static final String YELLOW = "\033[38;5;220m";
+	public static final String LIME_GREEN = "\033[38;5;40m";
   public static final String ANSI_RESET = "\u001B[0m";
   public static final String BLINKON = "\033[5m"; // color forhighlighting of the column w/ slow blink (currently white)
 		
@@ -17,7 +19,7 @@ public class MyFrame extends JFrame implements KeyListener{
   public static String[][] gameBoard = new String[gridRows][gridCols]; //
   public static String[] selectionGrid = new String[gridCols];
 
-  public static String currentPlayer = blueChip; // redChip starts as initial player
+  public static String currentPlayer = blueChip; // blueChip starts as initial player
   public static int playerPosition = 0; // first players chip starts placed to the far left
 	
 	MyFrame(){		
@@ -44,7 +46,6 @@ public class MyFrame extends JFrame implements KeyListener{
 			case ' ': 
 				dropPiece();
 				checkRows();
-				sleep(200);
 				switchPlayer();
 				selectionGrid[playerPosition] = currentPlayer;
 				update(); 
@@ -185,35 +186,64 @@ public class MyFrame extends JFrame implements KeyListener{
 		// check for winner and add to player score
 		for(int i = 0; i < gameBoard.length; i++){
 			for(int j = 0; j < gameBoard[0].length; j++){
+				
+				int consecutivePieces = 0;
 				if(gameBoard[i][j] == currentPlayer){
-					if(j-1 >= 0){ // check if left out of bound
-						System.out.println("left in bounds");
+					gameBoard[i][j] = YELLOW + "o"+ ANSI_RESET;
+					update();
+					sleep(5);
+
+					if(j-1 >= 0 && gameBoard[i][j-1] == currentPlayer){ // check if left is in bounds and equal to player
+						gameBoard[i][j-1] = YELLOW + "o"+ ANSI_RESET;
+						update();
+						sleep(5);
+						gameBoard[i][j-1] = currentPlayer;
+						update();
+						sleep(5);
+						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						for(int k = 2; k < 4; k++){
+							if(j-k >= 0 && gameBoard[i][j-k] == currentPlayer){
+								gameBoard[i][j-k] = YELLOW + "o"+ ANSI_RESET;
+								update();
+								sleep(5);
+								gameBoard[i][j-k] = currentPlayer;
+								update();
+								sleep(5);
+								consecutivePieces += 1; 
+							}
+						}
+						if(consecutivePieces != 4){
+							consecutivePieces = 0;
+							for(int k = 1; k < 4; k++){
+								if(j-k >= 0 && gameBoard[i][j-k] == YELLOW){
+									gameBoard[i][j-k] = RED;
+									update();
+									sleep(5);
+								}
+							}
+					  }
+					}else{
+						gameBoard[i][j] = currentPlayer;
+						update();
+						sleep(5);
 					}
-					if(j-1 >= 0 && i-1 >= 0){ // check if left up is out of bounds
-						System.out.println("left-up in bounds");
+					
+					if(j-1 >= 0 && i-1 >= 0){ // check if left up is in bounds
 					}
-					if(i-1 >= 0){ // check if up is out of bounds
-						System.out.println("up in bounds");					
+					if(i-1 >= 0){ // check if up is in bounds
 					}
-					if(j+1 < gameBoard[0].length && i-1 >= 0){ // check if right up is out of bounds
-						System.out.println("right-up in bounds");					
+					if(j+1 < gameBoard[0].length && i-1 >= 0){ // check if right up is in bounds
 					}
-					if(j+1 < gameBoard[0].length){ // check if right is out of bounds
-						System.out.println("right in bounds");					
+					if(j+1 < gameBoard[0].length){ // check if right is in bounds
 					}
-					if(j+1 < gameBoard[0].length && i+1 < gameBoard.length){ // check if right down is out of bounds
-						System.out.println("right-down in bounds");					
+					if(j+1 < gameBoard[0].length && i+1 < gameBoard.length){ // check if right down is in bounds
 					}
-					if(i+1 < gameBoard.length){ // check if down is out of bounds 
-						System.out.println("down in bounds");					
+					if(i+1 < gameBoard.length){ // check if down is in bounds 
 					}
-					if(i+1 < gameBoard.length && j-1 >= 0){ // check if down left is out of bounds
-						System.out.println("down-left in bounds");										
+					if(i+1 < gameBoard.length && j-1 >= 0){ // check if down left is in bounds
 					}
-					System.out.println("___________");
 				}
 			}
-			System.out.println("___________");
 		}
 	}
 
@@ -246,13 +276,14 @@ public class MyFrame extends JFrame implements KeyListener{
 
 	public static void displayCurrentPlayer(){
 		// Displaying the current player name/color
+		System.out.println();
 		if(currentPlayer == redChip){
 			System.out.println("");
-			System.out.println(RED + "Red" + ANSI_RESET + " Player: Select your spot: ");
+			System.out.println("            " + RED + "Red" + ANSI_RESET + " Player: Select your spot ");
 			}else{
 			currentPlayer = blueChip;
 				System.out.println("");
-				System.out.println(BLUE + "Blue" + ANSI_RESET + " Player: Select your spot: ");
+				System.out.println("             " + BLUE + "Blue" + ANSI_RESET + " Player: Select your spot");
 			}
 	}
 	
