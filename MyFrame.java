@@ -185,7 +185,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 						}
 					}
 					update();
-					sleep(10); // 1
+					sleep(1); // 1
 				}
 			}
 		}
@@ -416,20 +416,24 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 	
 	public static void displayWinner(){
     System.out.println();
-		if(currentPlayer == redChip){
-			System.out.println("");
-      System.out.print(" And the winner is");
+		if(currentPlayer == redChip){ // if the current player is red
+			System.out.println(""); // print a space
+      System.out.print("             And the winner is "); //print and the winner is
       for(int i = 0; i < 3; i++){
-        System.out.print(".");
+        System.out.print("."); // print a dot
+				sleep(10); //sleep
       }
-			System.out.print(" " + RED + "Red" + ANSI_RESET);
+			System.out.print(" " + RED + "Red" + ANSI_RESET); // print player color on same line
+				sleep(50);
 			}else{
         System.out.println("");
-        System.out.print(" And the winner is");
+        System.out.print("             And the winner is ");
         for(int i = 0; i < 3; i++){
           System.out.print(".");
+					sleep(10);
         }
 			  System.out.print(" " + BLUE + "Blue" + ANSI_RESET);
+				sleep(50);
 			}
 	}
 	
