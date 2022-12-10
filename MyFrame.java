@@ -196,7 +196,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 		}
 	}
 	
-	public static void checkRows(){
+	public static void checkRows(){// function is currently very error prone
 		// check for winner and add to player score
 		for(int i = 0; i < gameBoard.length; i++){
 			for(int j = 0; j < gameBoard[0].length; j++){
