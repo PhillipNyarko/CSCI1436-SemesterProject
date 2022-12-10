@@ -1,3 +1,8 @@
+/*GROUP MEMBERS
+	PHILLIP NYARKO
+	CHRISTOPHER PERALES
+	EDUARDO IBARRA
+	*/
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -241,7 +246,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 						}
 					}
 					if(i-1 >= 0 && gameBoard[i-1][j] == currentPlayer){ // check if up is in bounds
-						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						consecutivePieces += 2; // add 2 to the 4 pieces needed to win 
 						for(int k = 2; k < 4; k++){
 							if(i-k >= 0 && gameBoard[i-k][j] == currentPlayer){
 								consecutivePieces += 1; 
@@ -261,7 +266,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 						}
 					}
 					if(j+1 < gameBoard[0].length && i-1 >= 0 && gameBoard[i-1][j+1] == currentPlayer){ // check if right up is in bounds
-						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						consecutivePieces += 2; // add 2 to the 4 pieces needed to win 
 						for(int k = 2; k < 4; k++){
 							if(i-k >= 0 && j+k < gameBoard[0].length && gameBoard[i-k][j+k] == currentPlayer){
 								consecutivePieces += 1; 
@@ -281,7 +286,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 						}
 					}
 					if(j+1 < gameBoard[0].length){ // check if right is in bounds
-						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						consecutivePieces += 2; // add 2 to the 4 pieces needed to win 
 						for(int k = 2; k < 4; k++){
 							if(j+k < gameBoard[0].length && gameBoard[i][j+k] == currentPlayer){
 								consecutivePieces += 1; 
@@ -301,7 +306,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 						}
 					}
 					if(j+1 < gameBoard[0].length && i+1 < gameBoard.length){ // check if right down is in bounds
-						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						consecutivePieces += 2; // add 2 to the 4 pieces needed to win 
 						for(int k = 2; k < 4; k++){
 							if(j+k < gameBoard[0].length && i+k < gameBoard.length && gameBoard[i+k][j+k] == currentPlayer){
 								consecutivePieces += 1; 
@@ -321,7 +326,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 						}
 					}
 					if(i+1 < gameBoard.length){ // check if down is in bounds 
-						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						consecutivePieces += 2; // add 2 to the 4 pieces needed to win 
 						for(int k = 2; k < 4; k++){
 							if(i+k < gameBoard.length && gameBoard[i+k][j] == currentPlayer){
 								consecutivePieces += 1; 
@@ -341,7 +346,7 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
 						}
 					}
 					if(i+1 < gameBoard.length && j-1 >= 0){ // check if left down is in bounds
-						consecutivePieces += 2; // add one to the 4 pieces needed to win 
+						consecutivePieces += 2; // add 2 to the 4 pieces needed to win 
 						for(int k = 2; k < 4; k++){
 							if(j-k >= 0 && i+k < gameBoard.length && gameBoard[i+k][j-k] == currentPlayer){
 								consecutivePieces += 1; 
@@ -425,16 +430,15 @@ public class MyFrame extends JFrame implements KeyListener{ // subclass that inh
       }
 			System.out.print(" " + RED + "Red" + ANSI_RESET); // print player color on same line
 				sleep(50);
-			}else{
-        System.out.println("");
-        System.out.print("             And the winner is ");
-        for(int i = 0; i < 3; i++){
-          System.out.print(".");
-					sleep(10);
-        }
-			  System.out.print(" " + BLUE + "Blue" + ANSI_RESET);
-				sleep(50);
+		}else{
+			System.out.println("");
+			System.out.print("             And the winner is ");
+			for(int i = 0; i < 3; i++){
+				System.out.print(".");
+				sleep(10);
 			}
+			System.out.print(" " + BLUE + "Blue" + ANSI_RESET);
+			sleep(50);
+		}
 	}
-	
 }
